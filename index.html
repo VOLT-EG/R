@@ -43,7 +43,6 @@
             background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(8px);
             animation: pulseGlow 2s infinite ease-in-out;
         }
-        /* صورة اللوجو من الرابط الذي أرسلته */
         .logo-wrapper img { width: 70%; filter: drop-shadow(0 0 8px var(--volt-blue)); }
         
         h1 { 
@@ -65,7 +64,7 @@
             backdrop-filter: blur(15px); transition: 0.3s;
         }
         .item-name { font-size: 1.05rem; color: #f8fafc; font-weight: 500; }
-        .sub-text { font-size: 0.85rem; color: #94a3b8; display: block; margin-top: 6px; font-weight: 300; }
+        .sub-text { font-size: 0.85rem; color: #94a3b8; display: block; margin-top: 6px; font-weight: 300; line-height: 1.4; }
         .price-val { font-family: 'OMEGLE', sans-serif; font-size: 1.25rem; color: var(--volt-blue); }
 
         .promo-note { 
@@ -106,13 +105,16 @@
     </div>
 
     <script>
-        const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRqP7h1Sg74RXEdCUtKt7I2NtmoY390jVo6l4ccPugWMtcmKAnKc0BMyvJV9MXwNC5m-YiIACP1hgKy/pubhtml?gid=1002128215&single=true&output=csv';
+        // تم تصحيح الرابط هنا ليدعم سحب البيانات (CSV)
+        const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRqP7h1Sg74RXEdCUtKt7I2NtmoY390jVo6l4ccPugWMtcmKAnKc0BMyvJV9MXwNC5m-YiIACP1hgKy/pub?gid=1002128215&single=true&output=csv';
 
         async function initMenu() {
             const container = document.getElementById('menu-container');
             try {
                 const response = await fetch(CSV_URL);
                 const csvData = await response.text();
+                
+                // تحويل البيانات لصفوف
                 const rows = csvData.split('\n').map(row => row.split(','));
                 const categories = {};
 
@@ -147,9 +149,11 @@
                 `).join('');
             } catch (e) {
                 container.innerHTML = '<p style="text-align:center;">ERROR LOADING MENU</p>';
+                console.error(e);
             }
         }
 
+        // كود الشرارات
         const canvas = document.getElementById('spark-canvas');
         const ctx = canvas.getContext('2d');
         let particles = [];
