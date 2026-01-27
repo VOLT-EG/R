@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Volt Café | Menu</title>
+    
+    <link rel="icon" type="image/png" href="https://volt-eg.github.io/N/logo.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        @font-face {
+            font-family: 'OMEGLE';
+            src: url('https://volt-eg.github.io/N/OMEGLE-Regular.ttf') format('truetype'); 
+            font-weight: normal; font-style: normal;
+        }
+
+        :root {
+            --volt-blue: #00d2ff;
+            --volt-dark: #020617;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --card-border: rgba(0, 210, 255, 0.12);
+        }
+
+        body {
+            margin: 0; padding: 0;
+            background-color: var(--volt-dark);
+            background: radial-gradient(circle at 50% -10%, #1e293b 0%, #020617 85%);
+            color: #ffffff;
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            display: flex; flex-direction: column; align-items: center;
+            min-height: 100vh; box-sizing: border-box; padding: 40px 0;
+            overflow-x: hidden; position: relative;
+        }
+
+        #spark-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+        .content-wrapper { position: relative; z-index: 1; width: 92%; max-width: 450px; }
+
+        .header { text-align: center; margin-bottom: 45px; }
+        .logo-wrapper {
+            width: 95px; height: 95px; margin: 0 auto; border-radius: 50%;
+            border: 2px solid rgba(0, 210, 255, 0.4); display: flex; justify-content: center; align-items: center;
+            background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(8px);
+            animation: pulseGlow 2s infinite ease-in-out;
+        }
+        /* صورة اللوجو من الرابط الذي أرسلته */
+        .logo-wrapper img { width: 70%; filter: drop-shadow(0 0 8px var(--volt-blue)); }
+        
+        h1 { 
+            font-family: 'OMEGLE', sans-serif; font-size: 2.1rem; letter-spacing: 7px;
+            margin: 20px 0 0; font-weight: 100;
+            background: linear-gradient(180deg, #fff 30%, #a2e9ff 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+
+        .menu-section { margin-bottom: 40px; }
+        .section-header { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; }
+        .section-line { flex-grow: 1; height: 1px; background: linear-gradient(90deg, var(--volt-blue), transparent); opacity: 0.5; }
+        .section-title { font-family: 'OMEGLE', sans-serif; font-size: 1.4rem; color: #fff; letter-spacing: 1px; }
+
+        .item-card { 
+            background: var(--card-bg); border: 1px solid var(--card-border); 
+            border-radius: 16px; padding: 16px 20px; margin-bottom: 12px; 
+            display: flex; justify-content: space-between; align-items: center;
+            backdrop-filter: blur(15px); transition: 0.3s;
+        }
+        .item-name { font-size: 1.05rem; color: #f8fafc; font-weight: 500; }
+        .sub-text { font-size: 0.85rem; color: #94a3b8; display: block; margin-top: 6px; font-weight: 300; }
+        .price-val { font-family: 'OMEGLE', sans-serif; font-size: 1.25rem; color: var(--volt-blue); }
+
+        .promo-note { 
+            font-size: 0.85rem; color: var(--volt-blue); text-align: center;
+            margin: 30px auto; font-weight: bold; border: 1px dashed var(--volt-blue); 
+            padding: 10px 30px; border-radius: 50px; background: rgba(0, 210, 255, 0.02);
+        }
+
+        .footer { text-align: center; color: #475569; font-family: 'OMEGLE', sans-serif; font-size: 0.75rem; padding: 20px 0 40px; }
+        .footer a { color: var(--volt-blue); text-decoration: none; }
+
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 0 15px rgba(0, 210, 255, 0.3); border-color: rgba(0, 210, 255, 0.4); }
+            50% { box-shadow: 0 0 35px rgba(0, 210, 255, 0.7); border-color: rgba(0, 210, 255, 0.8); }
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="spark-canvas"></canvas>
+
+    <div class="content-wrapper">
+        <header class="header">
+            <div class="logo-wrapper"><img src="https://volt-eg.github.io/N/logo.png" alt="Volt Logo"></div>
+            <h1>VOLT MENU</h1>
+        </header>
+
+        <div id="menu-container">
+            <p style="text-align:center; font-family:'OMEGLE'; color:var(--volt-blue);">LOADING MENU...</p>
+        </div>
+
+        <div class="promo-note">إضافة أي فليفر 5 جنية</div>
+
+        <div class="footer">
+            <div>VOLT CAFE © 2026</div>
+            <div style="margin-top: 5px;">BY <a href="https://www.instagram.com/moyehiia" target="_blank">MOYEHIIA</a></div>
+        </div>
+    </div>
+
+    <script>
+        const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRqP7h1Sg74RXEdCUtKt7I2NtmoY390jVo6l4ccPugWMtcmKAnKc0BMyvJV9MXwNC5m-YiIACP1hgKy/pubhtml?gid=1002128215&single=true';
+
+        async function initMenu() {
+            const container = document.getElementById('menu-container');
+            try {
+                const response = await fetch(CSV_URL);
+                const csvData = await response.text();
+                const rows = csvData.split('\n').map(row => row.split(','));
+                const categories = {};
+
+                for (let i = 1; i < rows.length; i++) {
+                    const [category, name, price, note] = rows[i];
+                    if (!category || !name) continue;
+
+                    if (!categories[category]) categories[category] = [];
+                    categories[category].push({ 
+                        name: name.trim(), 
+                        price: price.trim(), 
+                        note: note ? note.trim().replace(/"/g, '') : "" 
+                    });
+                }
+
+                container.innerHTML = Object.keys(categories).map(cat => `
+                    <section class="menu-section">
+                        <div class="section-header">
+                            <span class="section-title">${cat}</span>
+                            <div class="section-line"></div>
+                        </div>
+                        ${categories[cat].map(item => `
+                            <div class="item-card">
+                                <div class="info-side">
+                                    <span class="item-name">${item.name}</span>
+                                    ${item.note ? `<span class="sub-text">${item.note}</span>` : ''}
+                                </div>
+                                <span class="price-val">${item.price}</span>
+                            </div>
+                        `).join('')}
+                    </section>
+                `).join('');
+            } catch (e) {
+                container.innerHTML = '<p style="text-align:center;">ERROR LOADING MENU</p>';
+            }
+        }
+
+        const canvas = document.getElementById('spark-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+        window.addEventListener('resize', resize); resize();
+        class Spark {
+            constructor() { this.init(); }
+            init() {
+                this.x = Math.random() * canvas.width; this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 1.1 + 0.2; this.speedY = -(Math.random() * 0.4 + 0.2);
+                this.opacity = Math.random(); this.fade = Math.random() * 0.01 + 0.005;
+            }
+            update() { this.y += this.speedY; this.opacity -= this.fade; if (this.opacity <= 0) this.init(); }
+            draw() { ctx.fillStyle = `rgba(0, 210, 255, ${this.opacity})`; ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill(); }
+        }
+        for (let i = 0; i < 40; i++) particles.push(new Spark());
+        function animate() { ctx.clearRect(0, 0, canvas.width, canvas.height); particles.forEach(p => { p.update(); p.draw(); }); requestAnimationFrame(animate); }
+        
+        initMenu();
+        animate();
+    </script>
+</body>
+</html>
