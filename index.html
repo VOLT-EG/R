@@ -22,6 +22,14 @@
             --card-border: rgba(0, 210, 255, 0.15);
         }
 
+        /* منع تحديد النصوص وإلغاء الوميض عند اللمس */
+        * {
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+        }
+
         body {
             margin: 0; padding: 0;
             background-color: var(--volt-dark);
@@ -35,12 +43,7 @@
         }
 
         #spark-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
-        
-        .content-wrapper { 
-            position: relative; z-index: 1; 
-            width: 95%;
-            max-width: 500px; 
-        }
+        .content-wrapper { position: relative; z-index: 1; width: 95%; max-width: 500px; }
 
         .header { text-align: center; margin-bottom: 35px; }
         .logo-wrapper {
@@ -74,7 +77,6 @@
         .sub-text { font-size: 0.95rem; color: #94a3b8; display: block; margin-top: 8px; line-height: 1.5; }
         .price-val { font-family: 'OMEGLE', sans-serif; font-size: 1.5rem; color: var(--volt-blue); white-space: nowrap; }
 
-        /* سلة الاختيارات العائمة */
         .cart-fab {
             position: fixed; bottom: 35px; left: 25px;
             width: 70px; height: 70px; background: var(--volt-blue);
@@ -90,7 +92,6 @@
             font-weight: bold; border: 3px solid var(--volt-dark); 
         }
 
-        /* تنسيق النوافذ المنبثقة (Modals) */
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(8px);
@@ -102,46 +103,45 @@
             padding: 25px; position: relative; animation: slideUp 0.3s ease-out;
             box-shadow: 0 0 50px rgba(0, 210, 255, 0.3);
             display: flex; flex-direction: column;
-            max-height: 85vh; /* زيادة الارتفاع المتاح قليلاً */
+            max-height: 85vh;
         }
         @keyframes slideUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 
-        /* تنسيق رأس النافذة (العنوان وزر الإغلاق) */
         .modal-header-row {
             display: flex; justify-content: space-between; align-items: center;
-            margin-bottom: 20px; flex-shrink: 0;
-        }
-        .modal-title { 
-            font-family: 'OMEGLE'; font-size: 1.6rem; color: var(--volt-blue); 
-            margin: 0; flex-grow: 1; 
+            margin-bottom: 20px; flex-shrink: 0; gap: 15px;
         }
 
-        /* تصميم زر الإغلاق العصري */
         .close-btn-modern {
             width: 38px; height: 38px;
             display: flex; justify-content: center; align-items: center;
             border-radius: 50%;
-            background: rgba(0, 210, 255, 0.1); /* خلفية زرقاء شفافة */
-            border: 1px solid rgba(0, 210, 255, 0.3); /* حدود نيون خفيفة */
-            color: var(--volt-blue); /* لون الأيقونة نيون */
+            background: rgba(0, 210, 255, 0.1);
+            border: 1px solid rgba(0, 210, 255, 0.3);
+            color: var(--volt-blue);
             font-size: 1.2rem; cursor: pointer;
             transition: all 0.3s ease;
             backdrop-filter: blur(5px);
+            flex-shrink: 0;
         }
-        .close-btn-modern:hover, .close-btn-modern:active {
+        .close-btn-modern:active {
             background: rgba(0, 210, 255, 0.25);
-            box-shadow: 0 0 15px rgba(0, 210, 255, 0.5); /* توهج عند الضغط */
-            transform: rotate(90deg); /* حركة دوران عصرية */
+            box-shadow: 0 0 15px rgba(0, 210, 255, 0.5);
+            transform: rotate(-90deg);
             color: #fff;
         }
 
-        /* قائمة الخيارات القابلة للتمرير */
+        .modal-title { 
+            font-family: 'OMEGLE'; font-size: 1.6rem; color: var(--volt-blue); 
+            margin: 0; flex-grow: 1; text-align: center;
+            padding-left: 38px; 
+        }
+
         .options-list { 
             display: flex; flex-direction: column; gap: 12px; 
             overflow-y: auto; padding: 5px; padding-right: 10px;
-            flex-grow: 1; /* السماح لها بالتمدد */
+            flex-grow: 1;
         }
-        /* شكل السكرول بار */
         .options-list::-webkit-scrollbar { width: 4px; }
         .options-list::-webkit-scrollbar-thumb { background: var(--volt-blue); border-radius: 10px; }
 
@@ -156,7 +156,6 @@
         .cart-items-box { overflow-y: auto; flex-grow: 1; margin-bottom: 20px; padding-right: 5px; }
         .cart-item-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
         .remove-icon { color: #ef4444; font-size: 1.3rem; cursor: pointer; padding: 5px; transition: 0.2s; }
-        .remove-icon:hover { transform: scale(1.2); color: #ff6b6b; }
 
         .total-row { flex-shrink: 0; display: flex; justify-content: space-between; font-family: 'OMEGLE'; font-size: 1.6rem; padding-top: 20px; border-top: 1px solid var(--volt-blue); }
 
@@ -179,10 +178,10 @@
     <div id="selection-modal" class="modal-overlay">
         <div class="modal-card">
             <div class="modal-header-row">
-                <div class="modal-title" id="selection-title">اختر طلبك</div>
                 <div class="close-btn-modern" onclick="closeModal('selection-modal')">
                     <i class="fas fa-times"></i>
                 </div>
+                <div class="modal-title" id="selection-title">اختر طلبك</div>
             </div>
             <div class="options-list" id="selection-options-container"></div>
         </div>
@@ -191,10 +190,10 @@
     <div id="cart-modal" class="modal-overlay">
         <div class="modal-card">
             <div class="modal-header-row">
-                <div class="modal-title">مفكرتك</div>
                 <div class="close-btn-modern" onclick="closeModal('cart-modal')">
                     <i class="fas fa-times"></i>
                 </div>
+                <div class="modal-title">مفكرتك</div>
             </div>
             <div class="cart-items-box" id="cart-items-list"></div>
             <div class="total-row">
@@ -283,8 +282,10 @@
             const item = menuData.find(i => i.id === id);
             if (item.prices.length > 1) {
                 showPriceSelection(item);
+                document.body.style.overflow = 'hidden'; // قفل الاسكرول
             } else if (item.flavors.length > 0) {
                 showFlavorSelection(item, item.prices[0]);
+                document.body.style.overflow = 'hidden'; // قفل الاسكرول
             } else {
                 addToBasket(item.name, item.prices[0]);
             }
@@ -305,6 +306,7 @@
             closeModal('selection-modal');
             if (item.flavors.length > 0) {
                 showFlavorSelection(item, selectedPrice);
+                document.body.style.overflow = 'hidden'; // إعادة القفل لأنه بيفتح في الدالة closeModal
             } else {
                 addToBasket(item.name, selectedPrice);
             }
@@ -320,6 +322,7 @@
                 </div>
             `).join('');
             document.getElementById('selection-modal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
         }
 
         function addToBasket(name, price) {
@@ -354,8 +357,15 @@
             updateBasketUI();
         }
 
-        function showCart() { document.getElementById('cart-modal').style.display = 'flex'; }
-        function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+        function showCart() { 
+            document.getElementById('cart-modal').style.display = 'flex'; 
+            document.body.style.overflow = 'hidden'; // قفل الاسكرول
+        }
+        
+        function closeModal(id) { 
+            document.getElementById(id).style.display = 'none'; 
+            document.body.style.overflow = 'auto'; // فتح الاسكرول
+        }
 
         const canvas = document.getElementById('spark-canvas');
         const ctx = canvas.getContext('2d');
