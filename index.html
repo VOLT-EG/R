@@ -45,12 +45,7 @@
         }
         .logo-wrapper img { width: 70%; filter: drop-shadow(0 0 8px var(--volt-blue)); }
         
-        h1 { 
-            font-family: 'OMEGLE', sans-serif; font-size: 2.1rem; letter-spacing: 7px;
-            margin: 20px 0 0; font-weight: 100;
-            background: linear-gradient(180deg, #fff 30%, #a2e9ff 100%);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-        }
+        h1 { font-family: 'OMEGLE', sans-serif; font-size: 2.1rem; letter-spacing: 7px; margin: 20px 0 0; font-weight: 100; background: linear-gradient(180deg, #fff 30%, #a2e9ff 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 
         .menu-section { margin-bottom: 40px; }
         .section-header { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; }
@@ -61,30 +56,90 @@
             background: var(--card-bg); border: 1px solid var(--card-border); 
             border-radius: 16px; padding: 16px 20px; margin-bottom: 12px; 
             display: flex; justify-content: space-between; align-items: center;
-            backdrop-filter: blur(15px); transition: 0.3s;
+            backdrop-filter: blur(15px); transition: 0.3s; cursor: pointer;
         }
+        .item-card:active { transform: scale(0.97); background: rgba(0, 210, 255, 0.1); }
         .item-name { font-size: 1.05rem; color: #f8fafc; font-weight: 500; }
         .sub-text { font-size: 0.85rem; color: #94a3b8; display: block; margin-top: 6px; font-weight: 300; line-height: 1.4; }
-        .price-val { font-family: 'OMEGLE', sans-serif; font-size: 1.25rem; color: var(--volt-blue); }
+        .price-val { font-family: 'OMEGLE', sans-serif; font-size: 1.25rem; color: var(--volt-blue); white-space: nowrap; }
 
-        .promo-note { 
-            font-size: 0.85rem; color: var(--volt-blue); text-align: center;
-            margin: 30px auto; font-weight: bold; border: 1px dashed var(--volt-blue); 
-            padding: 10px 30px; border-radius: 50px; background: rgba(0, 210, 255, 0.02);
+        /* سلة الاختيارات العائمة */
+        .cart-fab {
+            position: fixed; bottom: 30px; left: 30px;
+            width: 60px; height: 60px; background: var(--volt-blue);
+            border-radius: 50%; display: none; justify-content: center; align-items: center;
+            box-shadow: 0 0 20px rgba(0, 210, 255, 0.4); z-index: 100;
+            cursor: pointer; transition: 0.3s;
         }
+        .cart-count { position: absolute; top: 0; right: 0; background: #ff3e3e; color: white; border-radius: 50%; width: 22px; height: 22px; font-size: 0.7rem; display: flex; justify-content: center; align-items: center; font-weight: bold; border: 2px solid var(--volt-dark); }
 
-        .footer { text-align: center; color: #475569; font-family: 'OMEGLE', sans-serif; font-size: 0.75rem; padding: 20px 0 40px; }
+        /* النوافذ العائمة المحدثة (Centered Modal) */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(5px);
+            z-index: 1000; display: none; justify-content: center; align-items: center;
+        }
+        .modal-card {
+            width: 85%; max-width: 350px; background: #0f172a; 
+            border: 1px solid var(--volt-blue); border-radius: 24px;
+            padding: 25px; position: relative; animation: slideUp 0.3s ease-out;
+            box-shadow: 0 0 40px rgba(0, 210, 255, 0.2);
+        }
+        @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+        .modal-title { font-family: 'OMEGLE'; font-size: 1.4rem; color: var(--volt-blue); text-align: center; margin-bottom: 20px; }
+        .options-list { display: flex; flex-direction: column; gap: 10px; }
+        .choice-btn {
+            background: rgba(255,255,255,0.05); border: 1px solid rgba(0, 210, 255, 0.2);
+            color: #fff; padding: 15px; border-radius: 12px; cursor: pointer;
+            text-align: center; font-size: 1rem; transition: 0.2s;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .choice-btn:active { background: var(--volt-blue); color: var(--volt-dark); }
+        .choice-btn span:last-child { font-family: 'OMEGLE'; font-size: 1.1rem; }
+
+        .cart-items-box { max-height: 50vh; overflow-y: auto; margin-bottom: 15px; }
+        .cart-item-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .remove-icon { color: #ef4444; font-size: 1.1rem; cursor: pointer; }
+
+        .total-row { display: flex; justify-content: space-between; font-family: 'OMEGLE'; font-size: 1.3rem; padding-top: 15px; border-top: 1px solid var(--volt-blue); }
+        .modal-close-icon { position: absolute; top: 15px; right: 15px; color: #64748b; cursor: pointer; }
+
+        .promo-note { font-size: 0.85rem; color: var(--volt-blue); text-align: center; margin: 30px auto; font-weight: bold; border: 1px dashed var(--volt-blue); padding: 10px 30px; border-radius: 50px; background: rgba(0, 210, 255, 0.02); }
+        .footer { text-align: center; color: #475569; font-family: 'OMEGLE', sans-serif; font-size: 0.75rem; padding: 20px 0 40px; position: relative; z-index: 1; }
         .footer a { color: var(--volt-blue); text-decoration: none; }
 
-        @keyframes pulseGlow {
-            0%, 100% { box-shadow: 0 0 15px rgba(0, 210, 255, 0.3); border-color: rgba(0, 210, 255, 0.4); }
-            50% { box-shadow: 0 0 35px rgba(0, 210, 255, 0.7); border-color: rgba(0, 210, 255, 0.8); }
-        }
+        @keyframes pulseGlow { 0%, 100% { box-shadow: 0 0 15px rgba(0, 210, 255, 0.3); border-color: rgba(0, 210, 255, 0.4); } 50% { box-shadow: 0 0 35px rgba(0, 210, 255, 0.7); border-color: rgba(0, 210, 255, 0.8); } }
     </style>
 </head>
 <body>
 
     <canvas id="spark-canvas"></canvas>
+
+    <div class="cart-fab" id="cart-fab" onclick="showCart()">
+        <i class="fas fa-shopping-basket" style="color: #020617; font-size: 1.5rem;"></i>
+        <div class="cart-count" id="cart-count">0</div>
+    </div>
+
+    <div id="selection-modal" class="modal-overlay">
+        <div class="modal-card">
+            <i class="fas fa-times modal-close-icon" onclick="closeModal('selection-modal')"></i>
+            <div class="modal-title" id="selection-title">اختر طلبك</div>
+            <div class="options-list" id="selection-options-container"></div>
+        </div>
+    </div>
+
+    <div id="cart-modal" class="modal-overlay">
+        <div class="modal-card">
+            <i class="fas fa-times modal-close-icon" onclick="closeModal('cart-modal')"></i>
+            <div class="modal-title">طلباتك</div>
+            <div class="cart-items-box" id="cart-items-list"></div>
+            <div class="total-row">
+                <span>الإجمالي:</span>
+                <span id="total-amount">0 EGP</span>
+            </div>
+        </div>
+    </div>
 
     <div class="content-wrapper">
         <header class="header">
@@ -105,29 +160,41 @@
     </div>
 
     <script>
-        // تم تصحيح الرابط هنا ليدعم سحب البيانات (CSV)
         const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRqP7h1Sg74RXEdCUtKt7I2NtmoY390jVo6l4ccPugWMtcmKAnKc0BMyvJV9MXwNC5m-YiIACP1hgKy/pub?gid=1002128215&single=true&output=csv';
+        let basket = [];
+        let menuData = [];
 
         async function initMenu() {
             const container = document.getElementById('menu-container');
             try {
                 const response = await fetch(CSV_URL);
                 const csvData = await response.text();
-                
-                // تحويل البيانات لصفوف
                 const rows = csvData.split('\n').map(row => row.split(','));
                 const categories = {};
+                menuData = [];
 
                 for (let i = 1; i < rows.length; i++) {
                     const [category, name, price, note] = rows[i];
                     if (!category || !name) continue;
 
-                    if (!categories[category]) categories[category] = [];
-                    categories[category].push({ 
+                    const cleanNote = note ? note.trim().replace(/"/g, '') : "";
+                    const flavorList = cleanNote.includes('،') ? cleanNote.split('،') : (cleanNote.includes(',') ? cleanNote.split(',') : []);
+                    
+                    // منطق السعر المزدوج (:)
+                    const priceRaw = price.trim();
+                    const priceList = priceRaw.includes(':') ? priceRaw.split(':') : [priceRaw];
+
+                    const itemObj = { 
+                        id: i,
                         name: name.trim(), 
-                        price: price.trim(), 
-                        note: note ? note.trim().replace(/"/g, '') : "" 
-                    });
+                        prices: priceList.map(p => p.trim()), 
+                        note: cleanNote,
+                        flavors: flavorList.map(f => f.trim()).filter(f => f !== "")
+                    };
+
+                    menuData.push(itemObj);
+                    if (!categories[category]) categories[category] = [];
+                    categories[category].push(itemObj);
                 }
 
                 container.innerHTML = Object.keys(categories).map(cat => `
@@ -137,21 +204,116 @@
                             <div class="section-line"></div>
                         </div>
                         ${categories[cat].map(item => `
-                            <div class="item-card">
+                            <div class="item-card" onclick="handleItemLogic(${item.id})">
                                 <div class="info-side">
                                     <span class="item-name">${item.name}</span>
                                     ${item.note ? `<span class="sub-text">${item.note}</span>` : ''}
                                 </div>
-                                <span class="price-val">${item.price}</span>
+                                <span class="price-val">${item.prices.join(' : ')}</span>
                             </div>
                         `).join('')}
                     </section>
                 `).join('');
-            } catch (e) {
-                container.innerHTML = '<p style="text-align:center;">ERROR LOADING MENU</p>';
-                console.error(e);
+            } catch (e) { container.innerHTML = 'Error Loading Menu'; }
+        }
+
+        function handleItemLogic(id) {
+            const item = menuData.find(i => i.id === id);
+            
+            // 1. إذا كان هناك اختيار بين سعرين (:)
+            if (item.prices.length > 1) {
+                showPriceSelection(item);
+            } 
+            // 2. إذا كان هناك نكهات فقط
+            else if (item.flavors.length > 0) {
+                showFlavorSelection(item, item.prices[0]);
+            } 
+            // 3. صنف عادي
+            else {
+                addToBasket(item.name, item.prices[0]);
             }
         }
+
+        function showPriceSelection(item) {
+            const container = document.getElementById('selection-options-container');
+            document.getElementById('selection-title').innerText = "اختر الحجم / السعر";
+            
+            container.innerHTML = item.prices.map((p, index) => {
+                const label = index === 0 ? "صغير / عادي" : "كبير / دبل";
+                return `
+                <div class="choice-btn" onclick="afterPriceSelect(${item.id}, '${p}')">
+                    <span>${label}</span>
+                    <span>${p} EGP</span>
+                </div>`;
+            }).join('');
+            
+            document.getElementById('selection-modal').style.display = 'flex';
+        }
+
+        function afterPriceSelect(id, selectedPrice) {
+            const item = menuData.find(i => i.id === id);
+            closeModal('selection-modal');
+            
+            // بعد اختيار السعر، هل يوجد نكهات؟
+            if (item.flavors.length > 0) {
+                showFlavorSelection(item, selectedPrice);
+            } else {
+                addToBasket(item.name, selectedPrice);
+            }
+        }
+
+        function showFlavorSelection(item, price) {
+            const container = document.getElementById('selection-options-container');
+            document.getElementById('selection-title').innerText = "اختر النكهة";
+            
+            container.innerHTML = item.flavors.map(f => `
+                <div class="choice-btn" onclick="addToBasket('${item.name} (${f})', '${price}'); closeModal('selection-modal');">
+                    <span>${f}</span>
+                    <i class="fas fa-plus-circle" style="color:var(--volt-blue)"></i>
+                </div>
+            `).join('');
+            
+            document.getElementById('selection-modal').style.display = 'flex';
+        }
+
+        function addToBasket(name, price) {
+            const num = parseFloat(price.replace(/[^\d.]/g, '')) || 0;
+            basket.push({ name, price: num });
+            updateBasketUI();
+            
+            document.getElementById('cart-fab').style.display = 'flex';
+            const fab = document.getElementById('cart-fab');
+            fab.style.transform = 'scale(1.1)';
+            setTimeout(() => fab.style.transform = 'scale(1)', 200);
+        }
+
+        function updateBasketUI() {
+            document.getElementById('cart-count').innerText = basket.length;
+            const list = document.getElementById('cart-items-list');
+            list.innerHTML = basket.map((item, index) => `
+                <div class="cart-item-row">
+                    <span>${item.name}</span>
+                    <div>
+                        <b style="color:var(--volt-blue); margin-left:10px;">${item.price}</b>
+                        <i class="fas fa-trash-alt remove-icon" onclick="removeFromBasket(${index})"></i>
+                    </div>
+                </div>
+            `).join('');
+            const total = basket.reduce((s, i) => s + i.price, 0);
+            document.getElementById('total-amount').innerText = total + " EGP";
+        }
+
+        function removeFromBasket(index) {
+            basket.splice(index, 1);
+            if(basket.length === 0) {
+                document.getElementById('cart-fab').style.display = 'none';
+                closeModal('cart-modal');
+            }
+            updateBasketUI();
+        }
+
+        function showCart() { document.getElementById('cart-modal').style.display = 'flex'; }
+        function closeModal(id) { document.getElementById(id).style.display = 'none'; }
 
         // كود الشرارات
         const canvas = document.getElementById('spark-canvas');
