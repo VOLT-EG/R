@@ -63,7 +63,6 @@
         .sub-text { font-size: 0.85rem; color: #94a3b8; display: block; margin-top: 6px; font-weight: 300; line-height: 1.4; }
         .price-val { font-family: 'OMEGLE', sans-serif; font-size: 1.25rem; color: var(--volt-blue); white-space: nowrap; }
 
-        /* سلة الاختيارات العائمة */
         .cart-fab {
             position: fixed; bottom: 30px; left: 30px;
             width: 60px; height: 60px; background: var(--volt-blue);
@@ -73,37 +72,62 @@
         }
         .cart-count { position: absolute; top: 0; right: 0; background: #ff3e3e; color: white; border-radius: 50%; width: 22px; height: 22px; font-size: 0.7rem; display: flex; justify-content: center; align-items: center; font-weight: bold; border: 2px solid var(--volt-dark); }
 
-        /* النوافذ العائمة المحدثة (Centered Modal) */
+        /* Modals Styles */
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(5px);
+            background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(8px);
             z-index: 1000; display: none; justify-content: center; align-items: center;
         }
         .modal-card {
-            width: 85%; max-width: 350px; background: #0f172a; 
-            border: 1px solid var(--volt-blue); border-radius: 24px;
-            padding: 25px; position: relative; animation: slideUp 0.3s ease-out;
-            box-shadow: 0 0 40px rgba(0, 210, 255, 0.2);
+            width: 88%; max-width: 380px; background: #0f172a; 
+            border: 1px solid var(--volt-blue); border-radius: 28px;
+            padding: 30px 20px 20px; position: relative; animation: slideUp 0.3s ease-out;
+            box-shadow: 0 0 50px rgba(0, 210, 255, 0.3);
+            display: flex; flex-direction: column;
+            max-height: 80vh; /* تحديد أقصى طول للنافذة لتجنب خروجها عن الشاشة */
         }
-        @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        @keyframes slideUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 
-        .modal-title { font-family: 'OMEGLE'; font-size: 1.4rem; color: var(--volt-blue); text-align: center; margin-bottom: 20px; }
-        .options-list { display: flex; flex-direction: column; gap: 10px; }
+        .modal-title { font-family: 'OMEGLE'; font-size: 1.5rem; color: var(--volt-blue); text-align: center; margin-bottom: 20px; flex-shrink: 0; }
+
+        /* تعديل قائمة الخيارات لتكون قابلة للتمرير */
+        .options-list { 
+            display: flex; flex-direction: column; gap: 12px; 
+            overflow-y: auto; /* تفعيل السكرول الداخلي */
+            padding: 5px;
+            padding-right: 10px;
+        }
+        
+        /* شكل السكرول بار ليناسب التصميم */
+        .options-list::-webkit-scrollbar { width: 4px; }
+        .options-list::-webkit-scrollbar-thumb { background: var(--volt-blue); border-radius: 10px; }
+
         .choice-btn {
             background: rgba(255,255,255,0.05); border: 1px solid rgba(0, 210, 255, 0.2);
-            color: #fff; padding: 15px; border-radius: 12px; cursor: pointer;
+            color: #fff; padding: 16px; border-radius: 14px; cursor: pointer;
             text-align: center; font-size: 1rem; transition: 0.2s;
-            display: flex; justify-content: space-between; align-items: center;
+            display: flex; justify-content: space-between; align-items: center; flex-shrink: 0;
         }
         .choice-btn:active { background: var(--volt-blue); color: var(--volt-dark); }
         .choice-btn span:last-child { font-family: 'OMEGLE'; font-size: 1.1rem; }
 
-        .cart-items-box { max-height: 50vh; overflow-y: auto; margin-bottom: 15px; }
-        .cart-item-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
-        .remove-icon { color: #ef4444; font-size: 1.1rem; cursor: pointer; }
+        .cart-items-box { overflow-y: auto; flex-grow: 1; margin-bottom: 15px; padding-right: 5px; }
+        .cart-item-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .remove-icon { color: #ef4444; font-size: 1.2rem; cursor: pointer; padding: 5px; }
 
-        .total-row { display: flex; justify-content: space-between; font-family: 'OMEGLE'; font-size: 1.3rem; padding-top: 15px; border-top: 1px solid var(--volt-blue); }
-        .modal-close-icon { position: absolute; top: 15px; right: 15px; color: #64748b; cursor: pointer; }
+        .total-row { flex-shrink: 0; display: flex; justify-content: space-between; font-family: 'OMEGLE'; font-size: 1.4rem; padding-top: 15px; border-top: 1px solid var(--volt-blue); }
+        
+        /* تعديل زر الإغلاق ليكون واضحاً جداً */
+        .modal-close-icon { 
+            position: absolute; top: -15px; right: -10px; 
+            background: #fff; color: #000; 
+            width: 35px; height: 35px; 
+            border-radius: 50%; 
+            display: flex; justify-content: center; align-items: center;
+            font-size: 1.2rem; cursor: pointer; 
+            box-shadow: 0 0 15px rgba(255,255,255,0.4);
+            z-index: 10;
+        }
 
         .promo-note { font-size: 0.85rem; color: var(--volt-blue); text-align: center; margin: 30px auto; font-weight: bold; border: 1px dashed var(--volt-blue); padding: 10px 30px; border-radius: 50px; background: rgba(0, 210, 255, 0.02); }
         .footer { text-align: center; color: #475569; font-family: 'OMEGLE', sans-serif; font-size: 0.75rem; padding: 20px 0 40px; position: relative; z-index: 1; }
@@ -123,7 +147,7 @@
 
     <div id="selection-modal" class="modal-overlay">
         <div class="modal-card">
-            <i class="fas fa-times modal-close-icon" onclick="closeModal('selection-modal')"></i>
+            <div class="modal-close-icon" onclick="closeModal('selection-modal')"><i class="fas fa-times"></i></div>
             <div class="modal-title" id="selection-title">اختر طلبك</div>
             <div class="options-list" id="selection-options-container"></div>
         </div>
@@ -131,7 +155,7 @@
 
     <div id="cart-modal" class="modal-overlay">
         <div class="modal-card">
-            <i class="fas fa-times modal-close-icon" onclick="closeModal('cart-modal')"></i>
+            <div class="modal-close-icon" onclick="closeModal('cart-modal')"><i class="fas fa-times"></i></div>
             <div class="modal-title">طلباتك</div>
             <div class="cart-items-box" id="cart-items-list"></div>
             <div class="total-row">
@@ -179,8 +203,6 @@
 
                     const cleanNote = note ? note.trim().replace(/"/g, '') : "";
                     const flavorList = cleanNote.includes('،') ? cleanNote.split('،') : (cleanNote.includes(',') ? cleanNote.split(',') : []);
-                    
-                    // منطق السعر المزدوج (:)
                     const priceRaw = price.trim();
                     const priceList = priceRaw.includes(':') ? priceRaw.split(':') : [priceRaw];
 
@@ -219,17 +241,11 @@
 
         function handleItemLogic(id) {
             const item = menuData.find(i => i.id === id);
-            
-            // 1. إذا كان هناك اختيار بين سعرين (:)
             if (item.prices.length > 1) {
                 showPriceSelection(item);
-            } 
-            // 2. إذا كان هناك نكهات فقط
-            else if (item.flavors.length > 0) {
+            } else if (item.flavors.length > 0) {
                 showFlavorSelection(item, item.prices[0]);
-            } 
-            // 3. صنف عادي
-            else {
+            } else {
                 addToBasket(item.name, item.prices[0]);
             }
         }
@@ -240,11 +256,7 @@
             
             container.innerHTML = item.prices.map((p, index) => {
                 const label = index === 0 ? "صغير / عادي" : "كبير / دبل";
-                return `
-                <div class="choice-btn" onclick="afterPriceSelect(${item.id}, '${p}')">
-                    <span>${label}</span>
-                    <span>${p} EGP</span>
-                </div>`;
+                return `<div class="choice-btn" onclick="afterPriceSelect(${item.id}, '${p}')"><span>${label}</span><span>${p} EGP</span></div>`;
             }).join('');
             
             document.getElementById('selection-modal').style.display = 'flex';
@@ -253,8 +265,6 @@
         function afterPriceSelect(id, selectedPrice) {
             const item = menuData.find(i => i.id === id);
             closeModal('selection-modal');
-            
-            // بعد اختيار السعر، هل يوجد نكهات؟
             if (item.flavors.length > 0) {
                 showFlavorSelection(item, selectedPrice);
             } else {
@@ -280,11 +290,7 @@
             const num = parseFloat(price.replace(/[^\d.]/g, '')) || 0;
             basket.push({ name, price: num });
             updateBasketUI();
-            
             document.getElementById('cart-fab').style.display = 'flex';
-            const fab = document.getElementById('cart-fab');
-            fab.style.transform = 'scale(1.1)';
-            setTimeout(() => fab.style.transform = 'scale(1)', 200);
         }
 
         function updateBasketUI() {
